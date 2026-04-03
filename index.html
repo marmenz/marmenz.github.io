@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marcelo Armendariz – Computational and Systems Neuroscience</title>
+  <meta name="description" content="Marcelo Armendariz — Scientist at Harvard Medical School & Boston Children's Hospital.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1814;
+      --paper: #f5f2ec;
+      --muted: #6e6a62;
+      --accent: #2c4a7c;
+      --rule: #d6d0c4;
+      --nav-h: 48px;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Sticky Nav ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+    }
+
+    .site-nav .inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-name {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-name:hover { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--accent); }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 4rem 0 2.5rem;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2.5rem;
+      scroll-margin-top: var(--nav-h);
+    }
+
+    .photo-wrap { flex-shrink: 0; }
+
+    .photo-wrap img {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      object-fit: cover;
+      filter: grayscale(10%);
+      border: 2px solid var(--rule);
+    }
+
+    .photo-fallback {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: var(--rule);
+      border: 2px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 1.85rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+
+    .header-pos {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--accent);
+      margin-bottom: 0.45rem;
+    }
+
+    .header-aff {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.1rem;
+    }
+
+    .header-aff span { display: block; }
+
+    .header-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .email-link {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .email-link:hover { border-bottom-color: var(--accent); }
+
+    .profile-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .profile-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .profile-links a:hover { color: var(--accent); }
+
+    .profile-links a:hover svg { stroke: var(--accent); fill: var(--accent); }
+
+    .profile-links svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      transition: stroke 0.2s, fill 0.2s;
+    }
+
+    /* ── Sections ── */
+    section {
+      padding: 2.8rem 0;
+      border-bottom: 1px solid var(--rule);
+      scroll-margin-top: calc(var(--nav-h) + 1rem);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.08s; }
+    section:nth-of-type(2) { animation-delay: 0.18s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    /* ── About ── */
+    .about p {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--ink);
+      max-width: 66ch;
+      line-height: 1.75;
+    }
+
+    .about p + p { margin-top: 0.9rem; }
+
+    /* ── Publications ── */
+    .pub-note {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .pub-note a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .pub-note a:hover { border-bottom-color: var(--accent); }
+
+    .pub-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .pub-item {
+      display: grid;
+      grid-template-columns: 2.8rem 1fr;
+      gap: 0 1rem;
+      align-items: start;
+    }
+
+    .pub-year {
+      font-size: 0.72rem;
+      font-weight: 400;
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted);
+      padding-top: 0.2rem;
+      text-align: right;
+    }
+
+    .pub-title {
+      font-size: 0.97rem;
+      font-weight: 500;
+      line-height: 1.45;
+      margin-bottom: 0.25rem;
+      color: var(--ink);
+    }
+
+    .pub-authors {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+      line-height: 1.5;
+    }
+
+    .pub-authors strong {
+      font-weight: 500;
+      color: #3a3630;
+    }
+
+    .pub-venue {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pub-journal {
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .pub-details {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.67rem;
+      color: var(--muted);
+    }
+
+    .pub-link {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.72rem;
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .pub-link:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .pub-link::before { content: "↗ "; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem 0 3rem;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ── Back to top ── */
+    #back-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 36px;
+      height: 36px;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, border-color 0.2s;
+    }
+
+    #back-top.show { opacity: 1; pointer-events: auto; }
+    #back-top:hover { border-color: var(--accent); }
+
+    #back-top svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--muted);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.2s;
+    }
+
+    #back-top:hover svg { stroke: var(--accent); }
+
+    @media (max-width: 560px) {
+      header { flex-direction: column; gap: 1.5rem; }
+      .photo-wrap { order: -1; }
+      .header-text h1 { font-size: 1.5rem; }
+      .pub-item { grid-template-columns: 2.4rem 1fr; }
+      .nav-links { gap: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="inner">
+      <a href="#top" class="nav-name">Marcelo Armendariz</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#publications">Publications</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- ══ HEADER ══ -->
+    <header id="top">
+      <div class="header-text">
+        <h1>Marcelo Armendariz</h1>
+        <p class="header-pos">Research Fellow</p>
+        <div class="header-aff">
+          <span>Harvard Medical School</span>
+          <span>Boston Children's Hospital</span>
+          <span>Center for Brains, Minds &amp; Machines, at MIT</span>
+        </div>
+        <div class="header-contact">
+          <a href="mailto:Marcelo.ArmendarizGil@childrens.harvard.edu" class="email-link">marcelo.armendarizgil@childrens.harvard.edu</a>
+          <div class="profile-links">
+            <a href="https://orcid.org/0000-0002-7905-1104" target="_blank">
+              <svg viewBox="0 0 24 24" fill="var(--muted)" stroke="none" style="width:15px;height:15px;">
+                <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 3.588-1.444 3.588-3.722 0-2.016-1.091-3.722-3.588-3.722h-2.297z"/>
+              </svg>
+              ORCID
+            </a>
+            <a href="https://scholar.google.com/citations?user=pCBLRl0AAAAJ&hl=en" target="_blank">
+              <svg viewBox="0 0 24 24" fill="var(--muted)" stroke="none" style="width:15px;height:15px;">
+                <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h4.5v9H7v-6h2v6h2.5v-9H24L12 0z"/>
+              </svg>
+              Google Scholar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-wrap">
+        <img
+          src="src/photo_maz.png"
+          alt="Marcelo Armendariz"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="photo-fallback" style="display:none;">MA</div>
+      </div>
+    </header>
+
+    <!-- ══ ABOUT ══ -->
+    <section id="about">
+      <p class="section-label">About</p>
+      <p>
+        I am a Research Fellow at Harvard Medical School and Boston Children's Hospital,
+        and a member of MIT's Center for Brains, Minds and Machines. I study the neural mechanisms
+        and computational principles underlying human cognition, with a particular focus on
+        perception, memory, and learning. My research combines intracranial neurophysiological
+        recordings in the human brain, behavioral experiments, machine learning and AI methods.
+      </p>
+      <p>
+        I also work on advancing neurotechnology for use in patients. Together with Dr. Scellig
+        Stone, we established a novel technique to record single-neuron activity in pediatric
+        epilepsy patients, launching the human single-neuron research program at Boston Children's
+        Hospital. These recordings offer exceptional resolution for studying epileptic activity
+        and open new avenues to investigate the neural basis of human cognition and neurological
+        disorders.
+      </p>
+    </section>
+
+    <!-- ══ PUBLICATIONS ══ -->
+    <section id="publications">
+      <p class="section-label">Publications</p>
+      <p class="pub-note">Selected publications. Full list on <a href="https://scholar.google.com/citations?user=pCBLRl0AAAAJ&hl=en" target="_blank">Google Scholar</a>.</p>
+
+      <ul class="pub-list">
+
+        <li class="pub-item">
+          <span class="pub-year">2026</span>
+          <div>
+            <p class="pub-title">Single-neuron encoding of rapidly learned visual information reshapes human perception</p>
+            <p class="pub-authors"><strong>Armendariz M</strong>, Blumberg J, Singer J, Aiple F, Kim J, Dominguez-Iturza N, Brandt A, Reinacher P, Schulze-Bonhage A, Kreiman G</p>
+            <div class="pub-venue">
+              <span class="pub-journal">bioRxiv</span>
+              <span class="pub-details">2025.08.04.668333 · <em>under revision</em></span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1101/2025.08.04.668333" target="_blank">doi.org/10.1101/2025.08.04.668333</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2026</span>
+          <div>
+            <p class="pub-title">Interaction between depth cues binocular disparity and motion at the single-cell level in macaque area MT/V5</p>
+            <p class="pub-authors"><strong>Armendariz M</strong>, Vanduffel W, Janssen P, Romero MC</p>
+            <div class="pub-venue">
+              <span class="pub-details"><em>under revision</em></span>
+            </div>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2026</span>
+          <div>
+            <p class="pub-title">Can machines imitate humans? Integrative Turing tests for vision and language demonstrate a narrowing gap</p>
+            <p class="pub-authors">Zhang M*, Pavarino E*, Liu X*, Dellaferrera G, Sikarwar A*, Chen C*, <strong>Armendariz M*</strong>, Mudrik N*, …, Kreiman G</p>
+            <div class="pub-venue">
+              <span class="pub-journal">Nature Human Behaviour</span>
+              <span class="pub-details">· <em>in press</em></span>
+            </div>
+            <a class="pub-link" href="https://arxiv.org/abs/2211.13087" target="_blank">arxiv.org/abs/2211.13087</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2025</span>
+          <div>
+            <p class="pub-title">An adversarial collaboration to critically evaluate theories of consciousness</p>
+            <p class="pub-authors">Cogitate Consortium — Ferrante O, Gorska-Klimowska U, Henin S, …, <strong>Armendariz M</strong>, …, Boly M, Dehaene S, Koch C, Tononi G, Pitts M, Mudrik L &amp; Melloni L</p>
+            <div class="pub-venue">
+              <span class="pub-journal">Nature</span>
+              <span class="pub-details">642, 133–142, 2025</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1038/s41586-025-08888-1" target="_blank">doi.org/10.1038/s41586-025-08888-1</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2025</span>
+          <div>
+            <p class="pub-title">Open multi-center intracranial electroencephalography dataset with task probing conscious visual perception</p>
+            <p class="pub-authors">Seedat A, Lepauvre A, Jeschke J, Gorska-Klimowska U, <strong>Armendariz M</strong>, Bendtz K, …, Kreiman G, Melloni L</p>
+            <div class="pub-venue">
+              <span class="pub-journal">Scientific Data</span>
+              <span class="pub-details">12:854, 2025</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1038/s41597-025-04833-z" target="_blank">doi.org/10.1038/s41597-025-04833-z</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2024</span>
+          <div>
+            <p class="pub-title">Interdisciplinary and collaborative training in neuroscience: Insights from the Human Brain Project education programme</p>
+            <p class="pub-authors">Geminiani A, Kathrein J, Yegenoglu A, Vogel F, <strong>Armendariz M</strong>, et al.</p>
+            <div class="pub-venue">
+              <span class="pub-journal">Neuroinformatics</span>
+              <span class="pub-details">22(4):657–678, 2024</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1007/s12021-024-09682-6" target="_blank">doi.org/10.1007/s12021-024-09682-6</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2022</span>
+          <div>
+            <p class="pub-title">Look twice: A generalist computational model predicts return fixations across tasks and species</p>
+            <p class="pub-authors">Zhang M*, <strong>Armendariz M*</strong>, Xiao W, Rose O, Bendtz K, Livingstone M, Ponce CR, Kreiman G</p>
+            <div class="pub-venue">
+              <span class="pub-journal">PLoS Computational Biology</span>
+              <span class="pub-details">18(11):e1010654, 2022</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1371/journal.pcbi.1010654" target="_blank">doi.org/10.1371/journal.pcbi.1010654</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2022</span>
+          <div>
+            <p class="pub-title">Do computational models of vision need shape-based representations? Evidence from an individual with intriguing visual perceptions</p>
+            <p class="pub-authors"><strong>Armendariz M</strong>, Xiao W, Vinken K, Kreiman G</p>
+            <div class="pub-venue">
+              <span class="pub-journal">Cognitive Neuropsychology</span>
+              <span class="pub-details">39:75–77, 2022</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1080/02643294.2022.2041588" target="_blank">doi.org/10.1080/02643294.2022.2041588</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2019</span>
+          <div>
+            <p class="pub-title">Areal differences in depth cue integration between monkey and human</p>
+            <p class="pub-authors"><strong>Armendariz M</strong>, Ban H, Welchman AE, Vanduffel W</p>
+            <div class="pub-venue">
+              <span class="pub-journal">PLoS Biology</span>
+              <span class="pub-details">17(3):e2006405, 2019</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1371/journal.pbio.2006405" target="_blank">doi.org/10.1371/journal.pbio.2006405</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2019</span>
+          <div>
+            <p class="pub-title">Neural effects of transcranial magnetic stimulation at the single-cell level</p>
+            <p class="pub-authors">Romero MC, <strong>Armendariz M</strong>, Davare M, Janssen P</p>
+            <div class="pub-venue">
+              <span class="pub-journal">Nature Communications</span>
+              <span class="pub-details">10:2642, 2019</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1038/s41467-019-10638-7" target="_blank">doi.org/10.1038/s41467-019-10638-7</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2019</span>
+          <div>
+            <p class="pub-title">The autism- and schizophrenia-associated protein CYFIP1 regulates bilateral brain connectivity and behaviour</p>
+            <p class="pub-authors">Domínguez-Iturza N, Lo AC, Shah D, <strong>Armendariz M</strong>, Vannelli A, Mercaldo V, …, Bagni C</p>
+            <div class="pub-venue">
+              <span class="pub-journal">Nature Communications</span>
+              <span class="pub-details">10:3454, 2019</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1038/s41467-019-11203-y" target="_blank">doi.org/10.1038/s41467-019-11203-y</a>
+          </div>
+        </li>
+
+        <li class="pub-item">
+          <span class="pub-year">2019</span>
+          <div>
+            <p class="pub-title">Homology and specificity of natural sound-encoding in human and monkey auditory cortex</p>
+            <p class="pub-authors">Erb J*, <strong>Armendariz M*</strong>, De Martino F, Goebel R, Vanduffel W, Formisano E</p>
+            <div class="pub-venue">
+              <span class="pub-journal">Cerebral Cortex</span>
+              <span class="pub-details">29(9):3636–3650, 2019</span>
+            </div>
+            <a class="pub-link" href="https://doi.org/10.1093/cerc
